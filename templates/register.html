@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link href="/static/css/register.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<form class="form-signin panel" action="/register" method="POST">
+	<h2 class="form-signin-heading">Register</h2>
+	<input type="text" name="username" class="form-control add-bottom" placeholder="Username" required>
+	<input type="password" name="password" class="form-control add-bottom" placeholder="Password" required>
+	<input type="password" name="confpassword" class="form-control add-bottom" placeholder="Confirm Password" required><br>
+	<input type="text" name="address" class="form-control add-bottom" placeholder="Address" required>
+	<input type="tel" name="phone" class="form-control add-bottom" placeholder="Phone Number" required>
+	<h4 class="form-signin-heading">Payment Details</h4>
+	<label>Card Number</label>
+	<div class="input-group">
+        <input type="text" class="form-control" name="card" placeholder="Valid Card Number"
+            required autofocus />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+    </div>
+    <br>
+    <div class="row">
+    	<div class="col-md-7">
+    		<label>Expiry Date</label>
+    		<div class="form-group">
+    			<div class="col-lg-6">
+    				<input type="text" class="form-control" name="mm" placeholder="MM" required />
+    			</div>
+    			<div class="col-lg-6">
+    				<input type="text" class="form-control" name="yy" placeholder="YY" required />
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-md-5 pull-right">
+    		<label>CV Code</label>
+    		<div class="form-group">
+    			<input type="text" class="form-control" name="cv" placeholder="CV" required />
+    		</div>
+    	</div>
+    </div>
+    <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+</form>
+
+{% endblock %}

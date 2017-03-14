@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block head %}
+<link href="/static/css/result.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="panel panel-default">
+        <div class="panel-heading text-center"><h4>All Albums</h4></div>
+        <div class="panel-body">
+        	<div class="row text-center" >
+        		<ul class="pagination">
+        		  {% for i in range(1, pages + 1) %}
+				  <li><a href="/all/{{i}}">{{i}}</a></li>
+				  {% endfor %}
+				</ul>
+        	</div>
+            {% for result_row in result | batch(3) %}
+            <div class="row">
+                {% for album in result_row %}
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">                            
+                            <h4 class="pull-right">${{ album[1] }}</h4>
+                            <h4 class="wrap_word"><a>{{ album[0] }}</a></h4>
+                            <label>Songs</label>
+                            <ol class="songList sl{{ album[3]}}">
+                            </ol>
+                        </div>
+                        <div class="ratings" style="padding:10px;">
+                            <p class="pull-right"><button onclick="addToCart({{album[3]}})" class="btn btn-sm btn-success btn-block"><span class="glyphicon glyphicon-shopping-cart"></span></button></p>
+                            <p>
+                                <span>{{ album[2] }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.songList').each(function(){
+        var album_id = $(this).attr('class').split(' ').pop();
+        album_id = album_id.replace("sl",'');
+        $.get("/getSongs/"+album_id, function(data){
+            $.each(data, function(i,v){
+                $('.sl'+album_id).append('<li><p>' + v[0] + '</p></li>');
+            });
+        });
+    });
+})
+
+function addToCart(album_id){
+	console.log(album_id);
+	$.post("/addCart/" + album_id, function(data){
+		if ( data.status == "already Owned" ){
+			$('.panel-body').prepend('<div class="alert alert-info text-center" role="alert">\
+										  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+										  You already Own This Album\
+										</div>');
+		}
+	});
+	getCart();
+
+}
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+</script>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">Payment</div>
+			<div class="panel-body">
+				<label>Payment Method</label><br>
+				<select id="cc" onchange="update(this.value)">
+					<option class="card">--Select a Card--</option>
+					{% for card in cards %}
+					<option class="card" value="{{card[0]}}">{{card[1]}}</option>
+					{% endfor %}
+				</select>
+				<br>
+				<br>
+				<p>OR</p>
+				<label>Add a Payment Method</label>
+				<label>Card Number</label>
+				<form action="/newCard" method="POST" id="newCard">
+					<div class="input-group">
+				        <input type="text" class="form-control" name="card" placeholder="Valid Card Number"
+				            required autofocus />
+				        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+				    </div>
+				    <br>
+				    <div class="row">
+				    	<div class="col-md-7">
+				    		<label>Expiry Date</label>
+				    		<div class="form-group">
+				    			<div class="col-lg-6">
+				    				<input type="text" class="form-control" name="mm" placeholder="MM" required />
+				    			</div>
+				    			<div class="col-lg-6">
+				    				<input type="text" class="form-control" name="yy" placeholder="YY" required />
+				    			</div>
+				    		</div>
+				    	</div>
+				    	<div class="col-md-5 pull-right">
+				    		<label>CV Code</label>
+				    		<div class="form-group">
+				    			<input type="text" class="form-control" name="cv" placeholder="CV" required />
+				    		</div>
+				    	</div>
+				    </div>
+				 <button class="pull-right btn btn-md btn-info" type="submit">Add Credit Card</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">Cart</div>
+			<div class="panel-body">
+				<table class="table table-hover">
+		            <thead>
+		                <tr>
+		                    <th>Product</th>
+		                    <th>Quantity</th>
+		                    <th class="text-center">Price</th>
+		                    <th> </th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	{% for item in cart %}
+		                <tr class="itemCheck{{ item['id']}}">
+		                    <td class="col-sm-8 col-md-6">
+		                    <div class="media">
+		                        <div class="media-body">
+		                            <h4 class="media-heading"><a>{{ item["title"] }}</a></h4>
+		                            <h5 class="media-heading"> by <a href="#">{{ item["artist"] }}</a></h5>
+		                        </div>
+		                    </div></td>
+		                    <td class="col-sm-1 col-md-1" style="text-align: center">
+		                    <span>1</span>
+		                    </td>
+		                    <td class="col-sm-1 col-md-1 text-center"><strong class= "itemCost" value="{{ item['price']}} ">${{ item["price"] }}</strong></td>
+		                    <td class="col-sm-1 col-md-1">
+		                    <button onclick="removeCart({{ item['id'] }})" type="button" class="btn btn-danger">
+		                        <span class="glyphicon glyphicon-remove"></span> Remove
+		                    </button></td>
+		                </tr>
+		                {% endfor %}
+		                <tr>
+		                    <td>   </td>
+		                    <td>   </td>
+		                    <td><h5>Subtotal</h5></td>
+		                    <td class="text-right"><h5><strong class="subtotal"></strong></h5></td>
+		                </tr>
+		                <tr>
+		                    <td>   </td>
+		                    <td>   </td>
+		                    <td><h5>HST</h5></td>
+		                    <td class="text-right"><h5><strong class="hst"></strong></h5></td>
+		                </tr>
+		                <tr>
+		                    <td>   </td>
+		                    <td>   </td>
+		                    <td><h3>Total</h3></td>
+		                    <td class="text-right"><h3><strong class="total"></strong></h3></td>
+		                </tr>
+		                <tr>
+		                    <td>   </td>
+		                    <td>   </td>
+		                    <td>
+		                    <button onclick="home()"type="button" class="btn btn-default">
+		                        <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+		                    </button></td>
+		                    <td>
+		                    <form action="/checkout" method="POST">
+		                    <input type="hidden" name="cno" class="hidden-input" required>
+		                    <button type="submit" class="btn btn-success">
+		                        Checkout <span class="glyphicon glyphicon-play"></span>
+		                    </button></td>
+		                	</form>
+		                </tr>
+		            </tbody>
+		        </table>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var subtotal = 0.00;
+	$('.itemCost').each(function(){
+		subtotal += parseFloat($(this).attr('value'));
+	});
+	$('.subtotal').text('$' + subtotal);
+	var hst = subtotal * 0.13;
+	hst = hst.toFixed(2);
+	$('.hst').text('$' + hst);
+	var total = subtotal * 1.13
+	total = total.toFixed(2);
+	$('.total').text('$' + total);
+
+	if ( $('.card').size() > 1){
+		$('#cc').val( $('.card').eq(1).val());
+		$('.hidden-input').val($('.card').eq(1).val());
+	}
+});
+function home(){
+	window.location = "/";
+}
+function removeCart(album_id){
+	removeItem(album_id);
+	jQuery.ready();
+}
+function update(val){
+	console.log(val);
+	$('.hidden-input').val(val);
+}
+
+</script>
+{% endblock %}

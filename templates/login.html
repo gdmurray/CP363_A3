@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link href="/static/css/signin.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<form class="form-signin panel" action="/login" method="POST">
+    <h2 class="form-signin-heading" style="text-align: center;">Please sign in</h2>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input style="margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" name="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus >
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    {% if error %}
+    <div class="alert alert-danger">
+	  <strong>{{error}}</strong>
+	</div>
+	{% endif %}
+    <div class="row">
+    	<div class="col-sm-6">
+    		<button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+    	</div>
+    	<div class="col-sm-6">
+    		<button class="btn btn-lg btn-primary btn-block" onclick="register()"type="button">Register</button>
+    	</div>
+    </div>
+  </form>
+<script type="text/javascript">
+function register(){
+    window.location = "/register"
+}
+</script>
+{% endblock %}
