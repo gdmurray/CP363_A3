@@ -162,7 +162,6 @@ def payment():
 		result.append(info)
 	if request.method == "GET":
 		return render_template("payment.html",cards=cards, cart=result)
-
 	elif request.method == "POST":
 		cno = request.form["cno"]
 		if cno == '' or cno == None or cno == '':
@@ -179,7 +178,6 @@ def seeAll(page=None):
 	pages = math.ceil(count / 15)
 	if page is None:
 		page = 1
-	print(len(result))
 	return render_template("/all.html",result=result, pages=pages)
 if __name__ == "__main__":
 	app.run(port=8000, debug=True)
