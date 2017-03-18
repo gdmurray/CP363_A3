@@ -73,7 +73,7 @@ def get_credit_id():
 def get_all_albums(page):
     if not page:
         page = 1
-    
+
     conn, cursor = connection()
     cursor.execute("""SELECT COUNT(*) from Albums""")
     count = cursor.fetchone(); count = int(count[0])
@@ -139,6 +139,7 @@ def purchase(username, cart, cno):
 
 def create_credit(user_id, card_id, card_no, expiry, cv):
     conn, cursor = connection()
+    card_no = card_no.replace("-",'')
     cursor.execute("""INSERT INTO cards (cc_id, cc_number, expiry, security_code, user_id)
                         VALUES (%s, %s, %s, %s, %s)""", (card_id, card_no, expiry, cv, user_id))
     conn.commit(); cursor.close(); conn.close()
@@ -188,12 +189,12 @@ def search_database(search_term):
                             LEFT JOIN Musicians as producer
                                 ON Albums.producer_id=producer.sin
                             WHERE
-                                Musicians.name = %s
-                                OR producer.name = %s
-                                OR album_title = %s
-                                OR song_title = %s
-        """, (search_term, search_term, search_term, search_term) )
-
+                                (Musicians.name LIKE '{}' )
+                                OR (producer.name LIKE '{}' )
+                                OR (album_title LIKE '{}' )
+                                OR (song_title LIKE '{}' )
+        """.format(search_term, search_term, search_term,search_term ))
+    print(cursor)
     result = cursor.fetchall()
     cursor.close(); conn.close()
     return result

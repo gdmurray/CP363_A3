@@ -44,5 +44,6 @@ ul.dropdown-cart li .item-right button{
    white-space: -pre-wrap;     /* Opera <7 */   
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
+   overflow-wrap: break-word;
    max-width: 40px;
 }

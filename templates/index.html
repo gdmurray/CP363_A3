@@ -39,11 +39,11 @@
                                 <h4 class="pull-right">${{ album[1] }}</h4>
                                 <h4><a class="wrap_word">{{ album[0] }}</a></h4>
                                 <label>Songs</label>
-                                <ol class="songList sl{{ album[3]}}">
+                                <ol class="songList sl{{ album[3]}}" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
                                 </ol>
                             </div>
                             <div class="ratings" style="padding:10px;">
-                                <p class="pull-right"><button onclick="addToCart({{album[3]}})" class="btn btn-sm btn-success btn-block"><span class="glyphicon glyphicon-shopping-cart"></span></button></p>
+                                <p class="pull-right"><button type="button" onclick="addToCart({{album[3]}})" class="btn btn-sm btn-success btn-block"><span class="glyphicon glyphicon-shopping-cart"></span></button></p>
                                 <p>
                                     <span>{{ album[2] }}</span>
                                 </p>
@@ -69,5 +69,23 @@ $(document).ready(function(){
         });
     });
 })
+function addToCart(album_id){
+    console.log(album_id);
+    $.post("/addCart/" + album_id, function(data){
+        if ( data.status == "already Owned" ){
+            $('.panel-body').prepend('<div class="alert alert-info text-center" role="alert">\
+                                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                                          You already Own This Album\
+                                        </div>');
+        }
+    });
+    getCart();
+}
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 2000);
 </script>
 {% endblock %}

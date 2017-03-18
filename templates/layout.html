@@ -12,8 +12,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
-
-    <script src="/static/js/jquery.js"></script>
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+    <title>NoTown Music</title>
+    <script src="/static/js/jquery.js"></script>    
     {% block head %}
 
     {% endblock %}
@@ -55,7 +56,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if 'username' in session %}
                     <li>
-                        <a >{{ session.username }}</a>
+                        <a href="/" >{{ session.username }}</a>
                     </li>
                     <li class="dropdown">
                         <a onclick="getCart()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> <span class="itemAmount"></span> - Items<span class="caret"></span></a>

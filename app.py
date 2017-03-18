@@ -76,17 +76,16 @@ def register():
 
 
 @app.route("/search", methods=['POST','GET'])
-@login_required
 def search():
 	if request.method == "POST":
 		search_str = request.form["search_str"]
 		result = search_database(search_str)
 		for res in result:
 			print(res)
-		return render_template("result.html", result=result)
+		return render_template("result.html", result=result, search=search_str)
 
 	elif request.method == "GET":
-		return render_template("result.html", result=None)
+		return render_template("result.html", result=None, search=None)
 
 @app.route("/getCart", methods=['GET'])
 def getCart():

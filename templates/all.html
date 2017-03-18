@@ -23,7 +23,7 @@
                             <h4 class="pull-right">${{ album[1] }}</h4>
                             <h4 class="wrap_word"><a>{{ album[0] }}</a></h4>
                             <label>Songs</label>
-                            <ol class="songList sl{{ album[3]}}">
+                            <ol class="songList sl{{ album[3]}}" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
                             </ol>
                         </div>
                         <div class="ratings" style="padding:10px;">
@@ -47,14 +47,14 @@ $(document).ready(function(){
         album_id = album_id.replace("sl",'');
         $.get("/getSongs/"+album_id, function(data){
             $.each(data, function(i,v){
-                $('.sl'+album_id).append('<li><p>' + v[0] + '</p></li>');
+                $('.sl'+album_id).append('<li class="k' + album_id + '"><p>' + v[0] + '</p></li>');
             });
         });
     });
+    
 })
 
 function addToCart(album_id){
-	console.log(album_id);
 	$.post("/addCart/" + album_id, function(data){
 		if ( data.status == "already Owned" ){
 			$('.panel-body').prepend('<div class="alert alert-info text-center" role="alert">\
@@ -62,6 +62,13 @@ function addToCart(album_id){
 										  You already Own This Album\
 										</div>');
 		}
+		else if ( data.status == "Put in Cart" ){
+        	$('.panel-body').prepend('<div class="alert alert-success text-center" role="alert">\
+                                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                                          Added to Cart!\
+                                        </div>');
+
+        }
 	});
 	getCart();
 

@@ -15,7 +15,7 @@
 	<h4 class="form-signin-heading">Payment Details</h4>
 	<label>Card Number</label>
 	<div class="input-group">
-        <input type="text" class="form-control" name="card" placeholder="Valid Card Number"
+        <input type="text" class="form-control creditCardText" maxlength="19" name="card" placeholder="Valid Card Number"
             required autofocus />
         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
     </div>
@@ -25,21 +25,31 @@
     		<label>Expiry Date</label>
     		<div class="form-group">
     			<div class="col-lg-6">
-    				<input type="text" class="form-control" name="mm" placeholder="MM" required />
+    				<input type="text" class="form-control" maxlength="2" name="mm" placeholder="MM" required />
     			</div>
     			<div class="col-lg-6">
-    				<input type="text" class="form-control" name="yy" placeholder="YY" required />
+    				<input type="text" class="form-control" maxlength="2" name="yy" placeholder="YY" required />
     			</div>
     		</div>
     	</div>
     	<div class="col-md-5 pull-right">
     		<label>CV Code</label>
     		<div class="form-group">
-    			<input type="text" class="form-control" name="cv" placeholder="CV" required />
+    			<input type="text" class="form-control" name="cv" maxlength="3" placeholder="CV" required />
     		</div>
     	</div>
     </div>
     <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
 </form>
+<script type="text/javascript">
+$('.creditCardText').keyup(function() {
+  var foo = $(this).val().split("-").join(""); // remove hyphens
+  if (foo.length > 0) {
+    foo = foo.match(new RegExp('.{1,4}', 'g')).join("-");
+  }
+  $(this).val(foo);
+});
 
+
+</script>
 {% endblock %}

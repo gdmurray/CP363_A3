@@ -45,7 +45,8 @@ body {
 }
 
 .songList{
-    max-height: 60px;
+    min-height: 40px;
+    max-height: 40px;
     overflow-y: scroll;
     display: block;
 }
