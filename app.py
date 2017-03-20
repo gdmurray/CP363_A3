@@ -16,7 +16,6 @@ def login_required(f):
 			return redirect("/login")
 	return decorated_function
 
-
 @app.route("/")
 @login_required
 def index():
@@ -172,12 +171,10 @@ def payment():
 
 @app.route("/all", strict_slashes=False)
 @app.route("/all/<int:page>", strict_slashes=False)
-def seeAll(page=None):
+def seeAll(page=1):
 	result, count = get_all_albums(page)
-	pages = math.ceil(count / 15)
-	if page is None:
-		page = 1
-	return render_template("/all.html",result=result, pages=pages)
+	return render_template("/all.html",result=result, pages=math.ceil(count / 15))
+
 if __name__ == "__main__":
 	app.run(port=8000, debug=True)
 
