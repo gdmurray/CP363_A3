@@ -9,7 +9,28 @@ If not, there are plenty resources on google on how to get this set up.
 Using this project
 If you want to use the database already provided, go ahead and run the Database.SQL file, this will set up the tables, and add all the data included in the database all at once. The location by default is port 3306, the default MySQL Port.
 
-Steps of using the project.
+To **understand whats going on**, look below, If you want to **just see it** scroll to the first photo
+The main folders in this project are 
+**static**
+ - js
+ - css
+   - css files for each page
+ - fonts
+This folder contains the static assets, such as javascript library and the css
+
+**templates**
+This folder contains the HTML files, the HTML files is also where the javascript is directly coded into.
+
+**app.py**
+This is the module that contains the flask app and views, it handles routing and running the application
+
+**functions.py**
+Since the same function can be called multiple times in the main, its easier to separate the big functions into their own file
+this file contains all functions that access the database (read/write), it also contains the SQL code used to do each operation
+
+
+
+**Steps of using the project**.
 First you Login
 
 ![Alt text](img/login.png?raw=true "Login")
