@@ -10,12 +10,14 @@ Using this project
 If you want to use the database already provided, go ahead and run the Database.SQL file, this will set up the tables, and add all the data included in the database all at once. The location by default is port 3306, the default MySQL Port.
 
 To **understand whats going on**, look below, If you want to **just see it** scroll to the first photo
-The main folders in this project are 
-**static**
- - js
- - css
-   - css files for each page
- - fonts
+The main folders in this project are
+
+
+**static folder**
+ - js : Javascript libraries used in this project
+ - css: the css files used in the html, this makes the website look... nice?
+ - fonts: Stored the glyphicons (icons) in here to make it easier to navigate
+ 
 This folder contains the static assets, such as javascript library and the css
 
 **templates**
